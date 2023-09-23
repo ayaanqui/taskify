@@ -10,9 +10,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - '5434:5432'
+      - '5435:5432'
     volumes: 
-      - dotnet-webapi-db:/var/lib/postgresql/data
+      - taskify-db:/var/lib/postgresql/data
 volumes:
-  dotnet-webapi-db:
+  taskify-db:
     driver: local
