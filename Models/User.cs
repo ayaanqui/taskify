@@ -11,5 +11,10 @@ public class User : BaseModel
     public required string FullName { get; set; }
 
     [Column(TypeName = "varchar(255)")]
+    [Key]
+    [Required]
+    public required string Email { get; set; }
+
+    [Column(TypeName = "text")]
     public string AvatarUrl { get; set; }
 }
