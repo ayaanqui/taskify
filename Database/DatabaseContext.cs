@@ -7,6 +7,9 @@ public class DatabaseContext : DbContext
 {
     private readonly IConfiguration configuration;
 
+    // Models
+    public DbSet<User> Users { get; set; }
+
     public DatabaseContext(IConfiguration configuration)
     {
         this.configuration = configuration;
