@@ -6,11 +6,11 @@ namespace api.Controllers;
 
 [ApiController]
 [Route("users")]
-public class WeatherForecastController : ControllerBase
+public class UserController : ControllerBase
 {
     private readonly UserRepository userRepository;
 
-    public WeatherForecastController(UserRepository userRepository)
+    public UserController(UserRepository userRepository)
     {
         this.userRepository = userRepository;
     }
