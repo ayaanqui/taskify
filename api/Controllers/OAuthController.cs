@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using api.Models.Dto;
 using api.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -36,14 +37,23 @@ public class OAuthController : ControllerBase
     public IActionResult GenerateJwt()
     {
         // await HttpContext.SignInAsync(GoogleDefaults.AuthenticationScheme, new ClaimsPrincipal());
+        if (!User.Identity.IsAuthenticated)
+        {
+            return Unauthorized(new { Message = "Unauthorized" });
+        }
+
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        var name = User.FindFirstValue(ClaimTypes.Name);
+        var user = this.userRepository.FindOrCreate(new UserDto
+        {
+            FullName = name,
+            Email = email,
+        });
+
         return Ok(new
         {
-            Me = new
-            {
-                Fullname = User.FindFirstValue(ClaimTypes.Name),
-                Email = User.FindFirstValue(ClaimTypes.Email),
-                DOB = User.FindFirstValue(ClaimTypes.DateOfBirth)
-            },
+            Me = user,
+            OAuthSource = User.Identity.AuthenticationType,
             Token = "MY_JWT_TOKEN",
         });
     }

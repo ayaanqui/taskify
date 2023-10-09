@@ -57,4 +57,17 @@ public class UserRepository : BaseRepository<User, UserDto>
         this.db.SaveChanges();
         return user;
     }
+
+    public User FindOrCreate(UserDto input)
+    {
+        try
+        {
+            var user = this.db.Users.Where(u => u.Email == input.Email).First();
+            return user;
+        }
+        catch (Exception)
+        {
+            return this.Create(input);
+        }
+    }
 }

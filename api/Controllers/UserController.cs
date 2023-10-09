@@ -1,5 +1,6 @@
 using api.Models;
 using api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
@@ -15,9 +16,15 @@ public class UserController : ControllerBase
         this.userRepository = userRepository;
     }
 
+    [AllowAnonymous]
     [HttpGet(Name = "GetAllUsers")]
-    public IEnumerable<User> Get()
+    public IEnumerable<User> GetAllUsers() => this.userRepository.FindAll();
+
+    [AllowAnonymous]
+    [HttpGet("{userId}")]
+    public User GetUser(int userId)
     {
-        return this.userRepository.FindAll();
+
+        return this.userRepository.FindById(userId) ?? throw new Exception("could not find user");
     }
 }
