@@ -23,7 +23,7 @@ builder.Services
         options.ClientId = section["ClientId"];
         options.ClientSecret = section["ClientSecret"];
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        // options.CallbackPath = "/oauth/google/callback";
+        options.CallbackPath = "/oauth/google/callback";
     })
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
