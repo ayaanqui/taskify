@@ -36,7 +36,6 @@ public class OAuthController : ControllerBase
     [Authorize]
     public IActionResult GenerateJwt()
     {
-        // await HttpContext.SignInAsync(GoogleDefaults.AuthenticationScheme, new ClaimsPrincipal());
         if (!User.Identity.IsAuthenticated)
         {
             return Unauthorized(new { Message = "Unauthorized" });
