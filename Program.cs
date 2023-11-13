@@ -1,6 +1,8 @@
+using System.Net;
 using api.Database;
 using api.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,14 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exception = context.Features.Get<IExceptionHandlerPathFeature>().Error;
+    var response = new { exception.Message };
+    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+    await context.Response.WriteAsJsonAsync(response);
+}));
 
 app.MapControllers();
 

@@ -24,7 +24,6 @@ public class UserController : ControllerBase
     [HttpGet("{userId}")]
     public User GetUser(int userId)
     {
-
         return this.userRepository.FindById(userId) ?? throw new Exception("could not find user");
     }
 }
