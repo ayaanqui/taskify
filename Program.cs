@@ -3,6 +3,7 @@ using api.Database;
 using api.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,15 @@ builder.Services
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
 var app = builder.Build();
+
+// Run migrations
+using (var Scope = app.Services.CreateScope())
+{
+    Console.WriteLine("Running migrations...");
+
+    var context = Scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
