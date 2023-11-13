@@ -38,7 +38,7 @@ using (var Scope = app.Services.CreateScope())
     Console.WriteLine("Running migrations...");
 
     var context = Scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-    context.Database.Migrate();
+    await context.Database.MigrateAsync();
 }
 
 // Configure the HTTP request pipeline.
